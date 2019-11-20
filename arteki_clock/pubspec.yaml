@@ -12,6 +12,7 @@ dependencies:
     path: ../flutter_clock_helper
   cupertino_icons: ^0.1.2
   provider: ^3.1.0+1
+  percent_indicator: ^2.1.1+1
 
 dev_dependencies:
   flutter_test:

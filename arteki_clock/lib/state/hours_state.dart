@@ -1,29 +1,30 @@
-import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 
+import '../util/debug_util.dart';
+import 'time_state.dart';
+
 class HoursState with ChangeNotifier {
-  DateTime _dateTime;
+  final TimeState _timeState;
+  DateTime _dateTime = DateTime.now();
 
   DateTime get dateTime => _dateTime;
 
-  HoursState() {
-    print('HoursState()');
-    _updateHours();
+  HoursState(this._timeState) {
+    debug('HoursState()');
+    _timeState.addListener(_updateHours);
+  }
+
+  @override
+  void dispose() {
+    _timeState.removeListener(_updateHours);
+    super.dispose();
   }
 
   void _updateHours() {
-    _dateTime = DateTime.now();
-    notifyListeners();
-
-    Timer(
-      Duration(hours: 1) -
-          Duration(
-            minutes: _dateTime.minute,
-            seconds: _dateTime.second,
-            milliseconds: _dateTime.millisecond,
-          ),
-      _updateHours,
-    );
+    if (_timeState.dateTime.hour != _dateTime.hour) {
+      debug('notify hours! $_dateTime and ${_timeState.dateTime}');
+      _dateTime = _timeState.dateTime;
+      notifyListeners();
+    }
   }
 }

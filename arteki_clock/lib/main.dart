@@ -9,7 +9,7 @@ import 'arteki_clock.dart';
 import 'state/clock_settings_state.dart';
 import 'state/hours_state.dart';
 import 'state/minutes_state.dart';
-import 'state/seconds_state.dart';
+import 'state/time_state.dart';
 
 void main() {
   // A temporary measure until Platform supports web and TargetPlatform supports
@@ -21,15 +21,16 @@ void main() {
     debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
   }
 
+  final timeState = TimeState();
+
   runApp(
     ClockCustomizer((model) {
-      final secondsState = SecondsState();
       return MultiProvider(
         providers: [
           ChangeNotifierProvider(builder: (_) => ClockSettingsState(model)),
-          ChangeNotifierProvider(builder: (_) => HoursState()),
-          ChangeNotifierProvider(builder: (_) => MinutesState(secondsState)),
-          ChangeNotifierProvider.value(value: secondsState),
+          ChangeNotifierProvider(builder: (_) => HoursState(timeState)),
+          ChangeNotifierProvider(builder: (_) => MinutesState(timeState)),
+          ChangeNotifierProvider.value(value: timeState),
         ],
         child: ArtekiClock(),
       );

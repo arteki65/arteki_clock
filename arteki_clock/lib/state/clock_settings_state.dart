@@ -8,6 +8,12 @@ class ClockSettingsState with ChangeNotifier {
     model.addListener(_onModelChanged);
   }
 
+  @override
+  void dispose() {
+    model.removeListener(_onModelChanged);
+    super.dispose();
+  }
+
   void _onModelChanged() {
     notifyListeners();
   }
