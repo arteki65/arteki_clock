@@ -18,8 +18,7 @@ class ArtekiClock extends StatelessWidget {
   @override
   Widget build(BuildContext context) => LayoutBuilder(
         builder: (context, constraints) {
-          debug('constraints $constraints');
-          debug('constraints ${MediaQuery.of(context).size}');
+          debug('$runtimeType LayoutBuilder() with constraints $constraints');
           return Stack(
             children: <Widget>[
               Center(

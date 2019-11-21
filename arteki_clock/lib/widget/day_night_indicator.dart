@@ -1,9 +1,9 @@
-import 'package:arteki_clock/util/debug_util.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import '../state/clock_settings_state.dart';
+import '../state/hour_format_state.dart';
+import '../util/debug_util.dart';
 
 class DayNightIndicator extends StatelessWidget {
   final DateTime _dateTime;
@@ -17,15 +17,15 @@ class DayNightIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     debug('${this.runtimeType} build()');
-    return Consumer<ClockSettingsState>(
+    return Consumer<HourFormatState>(
       builder: _dayNightIndicatorBuilder,
     );
   }
 
   Widget _dayNightIndicatorBuilder(
-      BuildContext context, ClockSettingsState state, _) {
+      BuildContext context, HourFormatState state, _) {
     debug('${this.runtimeType} _dayNightIndicatorBuilder()');
-    if (state.model.is24HourFormat) {
+    if (state.is24Hformat) {
       return Container();
     }
     return Text(

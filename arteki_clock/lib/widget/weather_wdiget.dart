@@ -1,22 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../state/clock_settings_state.dart';
+import '../state/temperature_state.dart';
+import '../state/weather_state.dart';
+import '../util/debug_util.dart';
 
 class WeatherWidget extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => Consumer<ClockSettingsState>(
-        builder: _weatherWidgetBuilder,
-      );
-
-  Widget _weatherWidgetBuilder(
-          BuildContext context, ClockSettingsState state, _) =>
-      Row(
+  Widget build(BuildContext context) => Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(state.model.temperatureString),
+          Consumer<TemperatureState>(
+            builder: _temperatureBuilder,
+          ),
           SizedBox(width: 8),
-          Text(state.model.weatherString),
+          Consumer<WeatherState>(
+            builder: _weatherBuilder,
+          ),
         ],
       );
+
+  Widget _temperatureBuilder(BuildContext context, TemperatureState state, _) {
+    debug('$runtimeType _temperatureBuilder()');
+    return Text(state.temperature);
+  }
+
+  Widget _weatherBuilder(BuildContext context, WeatherState state, _) {
+    debug('$runtimeType _weatherBuilder()');
+    return Text(state.weather);
+  }
 }
