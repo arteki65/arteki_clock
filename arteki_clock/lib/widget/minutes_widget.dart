@@ -8,13 +8,16 @@ class MinutesWidget extends StatelessWidget {
 
   const MinutesWidget({
     Key key,
-    DateTime dateTime,
+    @required DateTime dateTime,
   })  : _dateTime = dateTime,
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
     debug('MinutesWidget - build()');
-    return Text(DateFormat('mm').format(_dateTime));
+    return AnimatedOpacity(
+        opacity: 1,
+        duration: Duration(milliseconds: 100),
+        child: Text(DateFormat('mm').format(_dateTime)));
   }
 }

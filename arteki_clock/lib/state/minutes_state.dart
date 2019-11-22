@@ -29,4 +29,9 @@ class MinutesState with ChangeNotifier {
       notifyListeners();
     }
   }
+
+  void manualUpdate() {
+    _dateTime = _dateTime.add(Duration(minutes: 1));
+    notifyListeners();
+  }
 }
