@@ -27,4 +27,9 @@ class HoursState with ChangeNotifier {
       notifyListeners();
     }
   }
+
+  void manualUpdate() {
+    _dateTime = _dateTime.add(Duration(hours: 1));
+    notifyListeners();
+  }
 }

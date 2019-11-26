@@ -1,33 +1,27 @@
 import 'package:flutter/material.dart';
 
 import '../util/debug_util.dart';
-import 'minutes_widget.dart';
 
-class AnimatedMinutesWidget extends StatefulWidget {
-  // final MinutesState _minutesState;
-
-  // const AnimatedMinutesWidget({
-  //   Key key,
-  //   @required MinutesState minutesState,
-  // })  : _minutesState = minutesState,
-  //       super(key: key);
-
+class AnimatedDigits extends StatefulWidget {
   final DateTime _dateTime;
+  final Widget Function(DateTime _dateTime) _builder;
 
-  const AnimatedMinutesWidget({
+  const AnimatedDigits({
     Key key,
     @required DateTime dateTime,
+    @required Widget Function(DateTime _dateTime) builder,
   })  : _dateTime = dateTime,
+        _builder = builder,
         super(key: key);
 
   @override
-  _AnimatedMinutesWidgetState createState() {
+  _AnimatedDigitsState createState() {
     debug('$runtimeType createState()');
-    return _AnimatedMinutesWidgetState();
+    return _AnimatedDigitsState();
   }
 }
 
-class _AnimatedMinutesWidgetState extends State<AnimatedMinutesWidget>
+class _AnimatedDigitsState extends State<AnimatedDigits>
     with TickerProviderStateMixin {
   AnimationController _animationController;
   Animation<double> _animation;
@@ -43,9 +37,7 @@ class _AnimatedMinutesWidgetState extends State<AnimatedMinutesWidget>
     _animationController = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 500),
-    )..addStatusListener(
-        (status) => debug('$runtimeType - animationStatus=$status'));
-    // _animation = Tween(begin: 0.0, end: 1.0).animate(_animationController);
+    );
     _animation = CurvedAnimation(
       parent: _animationController,
       curve: Curves.easeIn,
@@ -53,11 +45,10 @@ class _AnimatedMinutesWidgetState extends State<AnimatedMinutesWidget>
     );
 
     _animationController.forward();
-    //widget._minutesState.addListener(_minutesChanged);
   }
 
   @override
-  void didUpdateWidget(AnimatedMinutesWidget oldWidget) {
+  void didUpdateWidget(AnimatedDigits oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     debug('$runtimeType - didUpdateWidget($oldWidget)');
@@ -70,33 +61,21 @@ class _AnimatedMinutesWidgetState extends State<AnimatedMinutesWidget>
         _animationController.forward();
       });
     }
-
-    // if (widget._minutesState != oldWidget._minutesState) {
-    //   debug(
-    //       '$runtimeType - didUpdateWidget($oldWidget) - _minutesState changed!');
-    //   oldWidget._minutesState.removeListener(_minutesChanged);
-    //   widget._minutesState.addListener(_minutesChanged);
-    // }
   }
 
   @override
   void dispose() {
     debug('$runtimeType - dispose()');
-    //widget._minutesState.removeListener(_minutesChanged);
+    _animationController?.dispose();
     super.dispose();
   }
-
-  // void _minutesChanged() {
-  //   debug('$runtimeType - _minutesChanged()');
-  //   setState(() {}); // minute ticks
-  // }
 
   @override
   Widget build(BuildContext context) {
     debug('$runtimeType - build()');
     return ScaleTransition(
-      child: MinutesWidget(dateTime: _dateTime),
-      scale: _animationController,
+      child: widget._builder(_dateTime),
+      scale: _animation,
     );
   }
 }
