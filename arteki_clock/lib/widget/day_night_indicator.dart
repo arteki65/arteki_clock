@@ -1,3 +1,4 @@
+import 'package:arteki_clock/clock_theme_data.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -28,10 +29,14 @@ class DayNightIndicator extends StatelessWidget {
     if (state.is24Hformat) {
       return Container();
     }
+    final themeData = ClockThemeData.of(context);
     return Text(
       DateFormat('a').format(_dateTime),
       textAlign: TextAlign.center,
-      style: Theme.of(context).textTheme.display3,
+      style: Theme.of(context).textTheme.display3.copyWith(
+            fontFamily: themeData.fontFamily,
+            color: themeData.primaryColor,
+          ),
     );
   }
 }

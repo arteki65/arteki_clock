@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../state/hour_format_state.dart';
 import '../util/debug_util.dart';
+import 'segment_display/two_digits_segment_display.dart';
 
 class HoursWidget extends StatelessWidget {
   final DateTime _dateTime;
@@ -25,6 +26,6 @@ class HoursWidget extends StatelessWidget {
   Widget _hoursBuilder(BuildContext context, HourFormatState state, _) {
     debug('HoursWidget - _hoursBuilder()');
     final hoursFormat = state.is24Hformat ? DateFormat('H') : DateFormat('h');
-    return Text(hoursFormat.format(_dateTime));
+    return TwoDigitsSegmentDisplay(digits: hoursFormat.format(_dateTime));
   }
 }

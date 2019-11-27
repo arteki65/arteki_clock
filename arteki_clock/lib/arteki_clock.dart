@@ -1,8 +1,8 @@
-import 'package:arteki_clock/widget/eight_segment_display.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 
+import 'clock_theme_data.dart';
 import 'state/hours_state.dart';
 import 'state/minutes_state.dart';
 import 'state/time_state.dart';
@@ -19,19 +19,16 @@ import 'widget/weather_wdiget.dart';
 class ArtekiClock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return EightSegmentDisplay(
-      height: 100,
-      width: 50,
-    );
     final minutesState = Provider.of<MinutesState>(context, listen: false);
     final hoursState = Provider.of<HoursState>(context, listen: false);
+    final themeData = ClockThemeData.of(context);
     return LayoutBuilder(
       builder: (context, constraints) {
         debug('$runtimeType LayoutBuilder() with constraints $constraints');
         return DefaultTextStyle(
           style: Theme.of(context).textTheme.display4.copyWith(
-                color: Colors.blue,
-                fontFamily: 'Cute Font',
+                color: themeData.primaryColor,
+                fontFamily: themeData.fontFamily,
               ),
           child: Stack(
             children: <Widget>[
@@ -68,10 +65,11 @@ class ArtekiClock extends StatelessWidget {
                 ),
               ),
               DefaultTextStyle(
-                style: Theme.of(context)
-                    .textTheme
-                    .display1
-                    .copyWith(fontFamily: 'Cute Font', height: 0.9),
+                style: Theme.of(context).textTheme.display1.copyWith(
+                      fontFamily: themeData.fontFamily,
+                      height: 0.9,
+                      color: themeData.primaryColor,
+                    ),
                 child: Positioned(
                   top: constraints.maxHeight * 0.15,
                   left: 0,
@@ -121,10 +119,11 @@ class ArtekiClock extends StatelessWidget {
 
   Widget _minutesBuilder(BuildContext context, MinutesState state, _) {
     debug('ArtekiClock - _minutesBuilder()');
-    return AnimatedDigits(
-      dateTime: state.dateTime,
-      builder: (dateTime) => MinutesWidget(dateTime: dateTime),
-    );
+    // return AnimatedDigits(
+    //   dateTime: state.dateTime,
+    //   builder: (dateTime) => MinutesWidget(dateTime: dateTime),
+    // );
+    return MinutesWidget(dateTime: state.dateTime);
   }
 
   Widget _secondsBuilder(TimeState state, BoxConstraints constraints) {

@@ -1,8 +1,8 @@
 import 'package:flutter_clock_helper/model.dart';
 
-import 'abstract_clock_settings_state.dart';
+import 'abstract_state.dart';
 
-class TemperatureState extends AbstractClockSettingsState {
+class TemperatureState extends AbstractState<ClockModel> {
   String temperature;
 
   TemperatureState(ClockModel clockModel)
@@ -10,7 +10,8 @@ class TemperatureState extends AbstractClockSettingsState {
         super(clockModel);
 
   @override
-  bool shouldNotifyListeners() => temperature != clockModel.temperatureString;
+  bool shouldNotifyListeners(ClockModel model) =>
+      temperature != model.temperatureString;
 
   @override
   void updateState(ClockModel clockModel) {

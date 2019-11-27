@@ -1,3 +1,4 @@
+import 'package:arteki_clock/widget/segment_display/two_digits_segment_display.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -15,9 +16,7 @@ class MinutesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     debug('MinutesWidget - build()');
-    return AnimatedOpacity(
-        opacity: 1,
-        duration: Duration(milliseconds: 100),
-        child: Text(DateFormat('mm').format(_dateTime)));
+    final minutesText = DateFormat('mm').format(_dateTime);
+    return TwoDigitsSegmentDisplay(digits: minutesText);
   }
 }
