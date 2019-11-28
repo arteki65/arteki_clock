@@ -1,10 +1,10 @@
-import 'package:arteki_clock/clock_theme_data.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import '../state/hour_format_state.dart';
-import '../util/debug_util.dart';
+import '../../clock_theme_data.dart';
+import '../../state/hour_format_state.dart';
+import '../../util/debug_util.dart';
 
 class DayNightIndicator extends StatelessWidget {
   final DateTime _dateTime;

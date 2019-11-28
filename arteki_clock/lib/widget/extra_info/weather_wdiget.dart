@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../state/temperature_state.dart';
-import '../state/weather_state.dart';
-import '../util/debug_util.dart';
+import '../../state/temperature_state.dart';
+import '../../state/weather_state.dart';
+import '../../util/debug_util.dart';
 
 class WeatherWidget extends StatelessWidget {
   @override

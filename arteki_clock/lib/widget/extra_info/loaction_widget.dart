@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../state/location_state.dart';
+import '../../state/location_state.dart';
 
 class LocationWidget extends StatelessWidget {
   @override

@@ -9,7 +9,7 @@ final _light = ClockThemeData(
 );
 
 final _dark = ClockThemeData(
-  primaryColor: Colors.grey[200].withOpacity(1),
+  primaryColor: Colors.grey[200],
   secondaryColor: Colors.grey.withOpacity(0.05),
   fontFamily: _fontFamily,
 );
@@ -19,7 +19,7 @@ class ClockThemeData {
   final Color secondaryColor;
   final String fontFamily;
 
-  ClockThemeData({
+  const ClockThemeData({
     @required this.primaryColor,
     @required this.secondaryColor,
     @required this.fontFamily,

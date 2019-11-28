@@ -1,3 +1,7 @@
+import 'package:arteki_clock/widget/extra_info/extra_info_display.dart';
+import 'package:arteki_clock/widget/time/am_pm_display.dart';
+import 'package:arteki_clock/widget/time/seconds_indicator.dart';
+import 'package:arteki_clock/widget/time/time_display.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
@@ -5,136 +9,54 @@ import 'package:provider/provider.dart';
 import 'clock_theme_data.dart';
 import 'state/hours_state.dart';
 import 'state/minutes_state.dart';
-import 'state/time_state.dart';
 import 'util/debug_util.dart';
-import 'widget/animated_digits.dart';
-import 'widget/colon.dart';
-import 'widget/day_night_indicator.dart';
-import 'widget/hours_widget.dart';
-import 'widget/loaction_widget.dart';
-import 'widget/minutes_widget.dart';
-import 'widget/seconds_circle.dart';
-import 'widget/weather_wdiget.dart';
 
 class ArtekiClock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final minutesState = Provider.of<MinutesState>(context, listen: false);
-    final hoursState = Provider.of<HoursState>(context, listen: false);
     final themeData = ClockThemeData.of(context);
     return LayoutBuilder(
-      builder: (context, constraints) {
-        debug('$runtimeType LayoutBuilder() with constraints $constraints');
-        return DefaultTextStyle(
-          style: Theme.of(context).textTheme.display4.copyWith(
-                color: themeData.primaryColor,
-                fontFamily: themeData.fontFamily,
-              ),
-          child: Stack(
-            children: <Widget>[
-              Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    RepaintBoundary(
-                      child: Consumer<HoursState>(builder: _hoursBuilder),
-                    ),
-                    Colon(),
-                    RepaintBoundary(
-                      child: Consumer<MinutesState>(builder: _minutesBuilder),
-                    ),
-                  ],
-                ),
-              ),
-              Center(
-                child: RepaintBoundary(
-                  child: Consumer<TimeState>(
-                    builder: (context, state, _) =>
-                        _secondsBuilder(state, constraints),
-                  ),
-                ),
-              ),
-              Positioned(
-                bottom: constraints.maxHeight * 0.15,
-                left: 0,
-                width: constraints.maxWidth,
-                child: RepaintBoundary(
-                  child: Consumer<HoursState>(
-                    builder: _dayNightIndicatorBuilder,
-                  ),
-                ),
-              ),
-              DefaultTextStyle(
-                style: Theme.of(context).textTheme.display1.copyWith(
-                      fontFamily: themeData.fontFamily,
-                      height: 0.9,
-                      color: themeData.primaryColor,
-                    ),
-                child: Positioned(
-                  top: constraints.maxHeight * 0.15,
-                  left: 0,
-                  width: constraints.maxWidth,
-                  child: Column(
-                    children: <Widget>[
-                      RepaintBoundary(
-                        child: WeatherWidget(),
-                      ),
-                      ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxWidth: constraints.maxHeight * 0.7,
-                        ),
-                        child: RepaintBoundary(
-                          child: LocationWidget(),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Positioned(
-                bottom: 0,
-                left: 0,
-                child: FlatButton(
-                  child: Text('minutes update'),
-                  onPressed: () {
-                    minutesState.manualUpdate();
-                    hoursState.manualUpdate();
-                  },
-                ),
-              ),
-            ],
+      builder: (context, constraints) =>
+          _layoutBuilder(context, constraints, themeData),
+    );
+  }
+
+  Widget _layoutBuilder(BuildContext context, BoxConstraints constraints,
+      ClockThemeData themeData) {
+    debug('$runtimeType _layoutBuilder() with constraints $constraints');
+    final minutesState = Provider.of<MinutesState>(context, listen: false);
+    final hoursState = Provider.of<HoursState>(context, listen: false);
+
+    return Stack(
+      children: <Widget>[
+        Center(child: TimeDisplay()),
+        Center(
+          child: SecondsIndicator(constraints: constraints),
+        ),
+        Positioned(
+          bottom: constraints.maxHeight * 0.15,
+          left: 0,
+          width: constraints.maxWidth,
+          child: AmPmDisplay(),
+        ),
+        Positioned(
+          top: constraints.maxHeight * 0.15,
+          left: 0,
+          width: constraints.maxWidth,
+          child: ExtraInfoDisplay(constraints: constraints),
+        ),
+        Positioned(
+          bottom: 0,
+          left: 0,
+          child: FlatButton(
+            child: Text('minutes update'),
+            onPressed: () {
+              minutesState.manualUpdate();
+              hoursState.manualUpdate();
+            },
           ),
-        );
-      },
+        ),
+      ],
     );
-  }
-
-  Widget _hoursBuilder(BuildContext context, HoursState state, _) {
-    debug('ArtekiClock - _hoursBuilder()');
-    return AnimatedDigits(
-      dateTime: state.dateTime,
-      builder: (dateTime) => HoursWidget(dateTime: dateTime),
-    );
-  }
-
-  Widget _minutesBuilder(BuildContext context, MinutesState state, _) {
-    debug('ArtekiClock - _minutesBuilder()');
-    // return AnimatedDigits(
-    //   dateTime: state.dateTime,
-    //   builder: (dateTime) => MinutesWidget(dateTime: dateTime),
-    // );
-    return MinutesWidget(dateTime: state.dateTime);
-  }
-
-  Widget _secondsBuilder(TimeState state, BoxConstraints constraints) {
-    return SecondsCircle(
-      dateTime: state.dateTime,
-      radius: constraints.maxHeight * 0.95,
-    );
-  }
-
-  Widget _dayNightIndicatorBuilder(BuildContext context, HoursState state, _) {
-    debug('ArtekiClock - _dayNightIndicatorBuilder()');
-    return DayNightIndicator(dateTime: state.dateTime);
   }
 }
