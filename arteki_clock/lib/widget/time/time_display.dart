@@ -29,12 +29,12 @@ class TimeDisplay extends StatelessWidget {
   }
 
   Widget _hoursBuilder(BuildContext context, HoursState state, _) {
-    debug('ArtekiClock - _hoursBuilder()');
+    debug('$runtimeType - _hoursBuilder()');
     return HoursWidget(dateTime: state.dateTime);
   }
 
   Widget _minutesBuilder(BuildContext context, MinutesState state, _) {
-    debug('ArtekiClock - _minutesBuilder()');
+    debug('$runtimeType - _minutesBuilder()');
     return MinutesWidget(dateTime: state.dateTime);
   }
 }
