@@ -16,7 +16,7 @@ final _dark = ClockThemeData(
 
 class ClockThemeData {
   final Color primaryColor;
-  final Color secondaryColor;p
+  final Color secondaryColor;
   final String fontFamily;
 
   ClockThemeData({
