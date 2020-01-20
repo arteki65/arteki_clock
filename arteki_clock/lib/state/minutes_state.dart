@@ -1,4 +1,3 @@
-import '../util/debug_util.dart';
 import 'abstract_state.dart';
 import 'time_state.dart';
 
@@ -15,14 +14,8 @@ class MinutesState extends AbstractState<TimeState> {
   }
 
   @override
-  bool shouldNotifyListeners(TimeState model) {
-    if (model.dateTime.minute != _dateTime.minute) {
-      debug(
-          'notify minutes! _dateTime=$_dateTime and _timeState.dateTime=${model.dateTime}');
-      return true;
-    }
-    return false;
-  }
+  bool shouldNotifyListeners(TimeState model) =>
+      model.dateTime.minute != _dateTime.minute;
 
   @override
   void updateState(TimeState model) {

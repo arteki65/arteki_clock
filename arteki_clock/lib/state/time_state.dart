@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 
-import '../util/debug_util.dart';
 
 class TimeState with ChangeNotifier {
   DateTime _dateTime;
@@ -10,7 +9,6 @@ class TimeState with ChangeNotifier {
   DateTime get dateTime => _dateTime;
 
   TimeState() {
-    debug('TimeState()');
     _updateTime();
   }
 

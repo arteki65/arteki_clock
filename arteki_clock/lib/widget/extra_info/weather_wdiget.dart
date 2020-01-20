@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 
 import '../../state/temperature_state.dart';
 import '../../state/weather_state.dart';
-import '../../util/debug_util.dart';
 
 class WeatherWidget extends StatelessWidget {
   @override
@@ -20,13 +19,9 @@ class WeatherWidget extends StatelessWidget {
         ],
       );
 
-  Widget _temperatureBuilder(BuildContext context, TemperatureState state, _) {
-    debug('$runtimeType _temperatureBuilder()');
-    return Text(state.temperature);
-  }
+  Widget _temperatureBuilder(BuildContext context, TemperatureState state, _) =>
+      Text(state.temperature);
 
-  Widget _weatherBuilder(BuildContext context, WeatherState state, _) {
-    debug('$runtimeType _weatherBuilder()');
-    return Text(state.weather);
-  }
+  Widget _weatherBuilder(BuildContext context, WeatherState state, _) =>
+      Text(state.weather);
 }

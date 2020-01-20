@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 
 import '../../clock_theme_data.dart';
 import '../../state/hour_format_state.dart';
-import '../../util/debug_util.dart';
 
 class DayNightIndicator extends StatelessWidget {
   final DateTime _dateTime;
@@ -17,7 +16,6 @@ class DayNightIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debug('${this.runtimeType} build()');
     return Consumer<HourFormatState>(
       builder: _dayNightIndicatorBuilder,
     );
@@ -25,7 +23,6 @@ class DayNightIndicator extends StatelessWidget {
 
   Widget _dayNightIndicatorBuilder(
       BuildContext context, HourFormatState state, _) {
-    debug('${this.runtimeType} _dayNightIndicatorBuilder()');
     if (state.is24Hformat) {
       return Container();
     }

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../util/debug_util.dart';
-
 class AnimatedDigits extends StatefulWidget {
   final DateTime _dateTime;
   final Widget Function(DateTime _dateTime) _builder;
@@ -16,7 +14,6 @@ class AnimatedDigits extends StatefulWidget {
 
   @override
   _AnimatedDigitsState createState() {
-    debug('$runtimeType createState()');
     return _AnimatedDigitsState();
   }
 }
@@ -30,7 +27,6 @@ class _AnimatedDigitsState extends State<AnimatedDigits>
   @override
   void initState() {
     super.initState();
-    debug('$runtimeType - initState()');
 
     _dateTime = widget._dateTime;
 
@@ -51,7 +47,6 @@ class _AnimatedDigitsState extends State<AnimatedDigits>
   void didUpdateWidget(AnimatedDigits oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    debug('$runtimeType - didUpdateWidget($oldWidget)');
     if (_animationController.status == AnimationStatus.completed &&
         _dateTime != widget._dateTime) {
       _animationController.reverse().then((_) {
@@ -65,14 +60,12 @@ class _AnimatedDigitsState extends State<AnimatedDigits>
 
   @override
   void dispose() {
-    debug('$runtimeType - dispose()');
     _animationController?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    debug('$runtimeType - build()');
     return ScaleTransition(
       child: widget._builder(_dateTime),
       scale: _animation,

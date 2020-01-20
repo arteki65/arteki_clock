@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../state/hour_format_state.dart';
-import '../../util/debug_util.dart';
 import '../segment_display/two_digits_segment_display.dart';
 
 class HoursWidget extends StatelessWidget {
@@ -17,14 +16,12 @@ class HoursWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debug('HoursWidget - build()');
     return Consumer<HourFormatState>(
       builder: _hoursBuilder,
     );
   }
 
   Widget _hoursBuilder(BuildContext context, HourFormatState state, _) {
-    debug('HoursWidget - _hoursBuilder()');
     final hoursFormat = state.is24Hformat ? DateFormat('H') : DateFormat('h');
     return TwoDigitsSegmentDisplay(digits: hoursFormat.format(_dateTime));
   }

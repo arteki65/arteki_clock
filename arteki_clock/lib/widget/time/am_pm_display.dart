@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../state/hours_state.dart';
-import '../../util/debug_util.dart';
 import 'day_night_indicator.dart';
 
 class AmPmDisplay extends StatelessWidget {
@@ -15,8 +14,6 @@ class AmPmDisplay extends StatelessWidget {
     );
   }
 
-  Widget _dayNightIndicatorBuilder(BuildContext context, HoursState state, _) {
-    debug('$runtimeType - _dayNightIndicatorBuilder()');
-    return DayNightIndicator(dateTime: state.dateTime);
-  }
+  Widget _dayNightIndicatorBuilder(BuildContext context, HoursState state, _) =>
+      DayNightIndicator(dateTime: state.dateTime);
 }
